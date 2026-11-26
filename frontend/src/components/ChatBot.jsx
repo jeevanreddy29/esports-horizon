@@ -19,7 +19,7 @@ export default function ChatBot() {
       role: 'bot',
       text: hasSeen
         ? "Welcome back! How can I help you dominate today?"
-        : "Welcome! I'm **NeuroGamer**, your AI Esports Mentor for India Esports Hub. Ask me about live tournaments, registration, prizes, or gaming tips!"
+        : "Welcome! I'm **NeuroGamer**, your AI Esports Mentor for Esports Horizon. Ask me about live tournaments, registration, prizes, or gaming tips!"
     }];
   });
   const [loading, setLoading] = useState(false);

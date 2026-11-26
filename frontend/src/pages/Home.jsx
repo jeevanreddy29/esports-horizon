@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { tournamentAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
 import CountdownTimer from '../components/CountdownTimer';
-import logo from '../assets/logo_final.png';
+import BrandLogo from '../components/BrandLogo';
 import { GameIcon } from '../utils/gameLogos';
 import { FaEnvelope, FaPhone, FaTrophy, FaUsers, FaGamepad, FaMapMarkedAlt, FaUserCircle, FaSearch, FaCrosshairs, FaMedal, FaArrowRight } from 'react-icons/fa';
 
@@ -111,7 +111,7 @@ const TESTIMONIALS = [
     game: 'BGMI',
     initial: 'A',
     color: '#FF6B35',
-    quote: 'Won my first â‚¹1 Lakh prize through India Esports Hub. The tournament discovery feature is insane â€” I found 3 back-to-back tournaments in my city!',
+    quote: 'Won my first ₹1 Lakh prize through Esports Horizon. The tournament discovery feature is insane — I found 3 back-to-back tournaments in my city!',
     wins: 12,
     rank: '#1 BGMI India',
   },
@@ -300,21 +300,26 @@ export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   useEffect(() => {
-    const fetchData = async () => {
+    let active = true;
+    const fetchData = async (silent = false) => {
       try {
         const [liveRes, upcomingRes] = await Promise.all([
           tournamentAPI.getAll({ status: 'live' }),
           tournamentAPI.getAll({ status: 'upcoming' })
         ]);
+        if (!active) return;
         setLiveT(liveRes.data?.tournaments || []);
         setUpcomingT((upcomingRes.data?.tournaments || []).slice(0, 3));
       } catch (err) {
-        console.error('API error, using empty state:', err);
+        if (!silent) console.error('API error, using empty state:', err);
       } finally {
-        setIsLoading(false);
+        if (active && !silent) setIsLoading(false);
       }
     };
-    fetchData();
+    fetchData(false);
+    const liveSyncInterval = setInterval(() => fetchData(true), 20000);
+    const onFocus = () => fetchData(true);
+    window.addEventListener('focus', onFocus);
 
     // Count-up animation
     const targets = { players: 50000, prize: 200, tournaments: 200 };
@@ -339,7 +344,13 @@ export default function Home() {
       setActiveTestimonial(p => (p + 1) % TESTIMONIALS.length);
     }, 5000);
 
-    return () => { clearInterval(timer); clearInterval(testimonialTimer); };
+    return () => {
+      active = false;
+      clearInterval(liveSyncInterval);
+      window.removeEventListener('focus', onFocus);
+      clearInterval(timer);
+      clearInterval(testimonialTimer);
+    };
   }, []);
 
   return (
@@ -823,9 +834,11 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40, marginBottom: 48 }}>
             {/* Brand */}
             <div style={{ gridColumn: 'span 1' }}>
-              <img src={logo} alt="India Esports Hub" style={{ height: 48, marginBottom: 16, filter: 'drop-shadow(0 0 8px rgba(0,243,255,0.3))' }} />
+              <div style={{ marginBottom: 16 }}>
+                <BrandLogo size={38} subtitle />
+              </div>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.8, marginBottom: 20 }}>
-                Premier esports platform connecting players, tournaments, and communities.
+                India&apos;s competitive esports platform connecting players, live tournaments, rankings, and communities.
               </p>
               {/* Social icons */}
               <div style={{ display: 'flex', gap: 10 }}>
@@ -914,10 +927,10 @@ export default function Home() {
           {/* Bottom row */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
             <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontFamily: 'Rajdhani', fontWeight: 600 }}>
-              Â© {new Date().getFullYear()} India Esports Hub Â· All Rights Reserved
+              © {new Date().getFullYear()} Esports Horizon · All Rights Reserved
             </div>
             <div style={{ color: 'var(--text-muted)', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: 6 }}>
-              Proudly built in India Â· For Indian gamers, by Indian gamers
+              Proudly built in India · For Indian gamers, by Indian gamers
             </div>
             <div style={{ display: 'flex', gap: 20 }}>
               {[

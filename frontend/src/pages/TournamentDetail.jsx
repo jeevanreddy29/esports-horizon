@@ -20,20 +20,31 @@ export default function TournamentDetail() {
   const [bookmarking, setBookmarking] = useState(false);
 
   useEffect(() => {
-    tournamentAPI.getById(id)
-      .then(r => setTournament(r.data?.tournament))
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    let active = true;
+    const syncDetails = (initial = false) => {
+      tournamentAPI.getById(id)
+        .then(r => { if (active) setTournament(r.data?.tournament); })
+        .catch(() => {})
+        .finally(() => { if (active && initial) setLoading(false); });
+    };
+
+    syncDetails(true);
+    const interval = setInterval(() => syncDetails(false), 15000);
 
     if (user) {
       tournamentAPI.myRegistrations()
-        .then(r => setRegistered(r.data?.tournaments?.some(t => String(t._id || t.id) === String(id))))
+        .then(r => { if (active) setRegistered(r.data?.tournaments?.some(t => String(t._id || t.id) === String(id))); })
         .catch(() => {});
       
       tournamentAPI.myBookmarks()
-        .then(r => setBookmarked(r.data?.tournaments?.some(t => String(t._id || t.id) === String(id))))
+        .then(r => { if (active) setBookmarked(r.data?.tournaments?.some(t => String(t._id || t.id) === String(id))); })
         .catch(() => {});
     }
+
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
   }, [id, user]);
 
   const handleBookmark = async () => {

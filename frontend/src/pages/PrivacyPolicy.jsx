@@ -16,7 +16,7 @@ export default function PrivacyPolicy() {
           <div className="card" style={{ padding: 40, fontFamily: 'Inter', lineHeight: 1.8, color: 'var(--text-secondary)' }}>
             <h3 style={{ fontFamily: 'Orbitron', color: '#fff', marginBottom: 16 }}>1. Information We Collect</h3>
             <p style={{ marginBottom: 30 }}>
-              When you register for an Esports Hub India account, we collect personal information such as your name, email address, in-game IDs, and state of residence. We also track tournament participation and leaderboard statistics.
+              When you register for an Esports Horizon account, we collect personal information such as your name, email address, in-game IDs, and state of residence. We also track tournament participation and leaderboard statistics.
             </p>
 
             <h3 style={{ fontFamily: 'Orbitron', color: '#fff', marginBottom: 16 }}>2. How We Use Your Data</h3>

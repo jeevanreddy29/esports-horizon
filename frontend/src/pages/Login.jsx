@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
-import logo from '../assets/logo_final.png';
+import BrandLogo from '../components/BrandLogo';
 import { FaEye, FaEyeSlash, FaUser, FaLock } from 'react-icons/fa';
 
 export default function Login() {
@@ -57,8 +57,8 @@ export default function Login() {
           ✕
         </button>
 
-        <div className="auth-logo" style={{ marginBottom: 32 }}>
-          <img src={logo} alt="India Esports Hub" style={{ height: 64, filter: 'drop-shadow(0 0 15px var(--cyan-glow))' }} />
+        <div className="auth-logo" style={{ marginBottom: 32, display: 'flex', justifyContent: 'center' }}>
+          <BrandLogo size={48} />
         </div>
 
         <h1 className="auth-title" style={{ fontFamily: 'Orbitron', fontWeight: 900, marginBottom: 12 }}>

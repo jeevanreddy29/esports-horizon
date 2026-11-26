@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { notificationAPI } from '../services/api';
-import logo from '../assets/logo_final.png';
+import BrandLogo from './BrandLogo';
 import { FaHome, FaTrophy, FaChartBar, FaUsers, FaUser, FaBell, FaBellSlash } from 'react-icons/fa';
 
 const navLinks = [
@@ -69,7 +69,7 @@ export default function Navbar() {
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="navbar-inner">
           <Link to="/" className="navbar-logo">
-            <img src={logo} alt="India Esports Hub" style={{ height: '46px', width: 'auto', objectFit: 'contain' }} />
+            <BrandLogo size={36} />
           </Link>
 
           <div className="navbar-links">
@@ -183,7 +183,7 @@ export default function Navbar() {
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`}>
         <button className="mobile-close" onClick={() => setMobileOpen(false)} aria-label="Close menu">&times;</button>
         <Link to="/" onClick={() => setMobileOpen(false)} className="navbar-logo" style={{ marginBottom: 16 }}>
-          <img src={logo} alt="India Esports Hub" style={{ height: 50 }} />
+          <BrandLogo size={40} />
         </Link>
         {navLinks.map(link => (
           <Link key={link.to} to={link.to} onClick={() => setMobileOpen(false)} className="nav-link" style={{ fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: 8 }}>

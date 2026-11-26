@@ -14,7 +14,7 @@ export default function About() {
           <div style={{ display: 'inline-flex', alignItems: 'center', padding: '6px 16px', borderRadius: 6, background: 'rgba(245,166,35,0.1)', border: '1px solid rgba(245,166,35,0.3)', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.8rem', color: 'var(--gold)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>
             Our Mission
           </div>
-          <h1 className="section-title"><span className="gradient-text">About Esports Hub India</span></h1>
+          <h1 className="section-title"><span className="gradient-text">About Esports Horizon</span></h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', marginTop: 20 }}>
             We are building the definitive competitive gaming platform for Indian players. 
             Our goal is to bridge the gap between amateur gamers and professional esports opportunities.

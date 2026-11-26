@@ -123,21 +123,27 @@ export default function Leaderboard() {
 
   useEffect(() => {
     let active = true;
-    const timer = setTimeout(() => {
+    const load = (silent = false) => {
       if (!active) return;
-      setLoading(true);
+      if (!silent) setLoading(true);
       leaderboardAPI.get({ game: game === 'all' ? undefined : game })
         .then(r => {
           if (!active) return;
           setLeaderboard(r.data?.players || []);
           setLastUpdated(new Date());
         })
-        .catch(() => { if (active) setLeaderboard([]); })
-        .finally(() => { if (active) setLoading(false); });
-    }, 0);
+        .catch(() => { if (active && !silent) setLeaderboard([]); })
+        .finally(() => { if (active && !silent) setLoading(false); });
+    };
+    const timer = setTimeout(() => load(false), 0);
+    const interval = setInterval(() => load(true), 20000);
+    const onFocus = () => load(true);
+    window.addEventListener('focus', onFocus);
     return () => {
       active = false;
       clearTimeout(timer);
+      clearInterval(interval);
+      window.removeEventListener('focus', onFocus);
     };
   }, [game]);
 
@@ -218,9 +224,9 @@ export default function Leaderboard() {
             }}>HALL OF CHAMPIONS</span>
           </h1>
           
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 600, margin: '0 auto 40px' }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)', display: 'inline-block' }} />
-            Last updated: {getUpdateString()}
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontSize: '0.8rem', color: 'var(--green)', fontFamily: 'Rajdhani', fontWeight: 700, margin: '0 auto 40px', padding: '5px 14px', borderRadius: 999, background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.25)' }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)', animation: 'live-pulse 1.4s infinite', display: 'inline-block' }} />
+            LIVE RANKINGS · Updated {getUpdateString()}
           </div>
 
           {/* Dynamic Filter */}

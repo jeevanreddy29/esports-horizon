@@ -161,8 +161,8 @@ export default function Tournaments() {
   const [format, setFormat] = useState('all');
   const [region, setRegion] = useState('all');
 
-  const fetchTournaments = useCallback(() => {
-    setLoading(true);
+  const fetchTournaments = useCallback((silent = false) => {
+    if (!silent) setLoading(true);
     tournamentAPI.getAll({
       game: game === 'all' ? undefined : game,
       status: status === 'all' ? undefined : status,
@@ -178,24 +178,26 @@ export default function Tournaments() {
       })
       .catch((err) => {
         console.error('❌ API Error:', err);
-        toast.error('Failed to load tournaments: ' + (err.response?.data?.error || err.message));
-        setTournaments([]);
+        if (!silent) {
+          toast.error('Failed to load tournaments: ' + (err.response?.data?.error || err.message));
+          setTournaments([]);
+        }
       })
-      .finally(() => setLoading(false));
+      .finally(() => { if (!silent) setLoading(false); });
   }, [game, status, search, minPrize, maxPrize, format, region]);
 
   useEffect(() => {
     let active = true;
-    const run = () => {
-      if (active) fetchTournaments();
-    };
-    const init = setTimeout(run, 0);
-    // Auto-refresh every 60 seconds
-    const interval = setInterval(run, 60000);
+    const init = setTimeout(() => { if (active) fetchTournaments(false); }, 0);
+    // Real-time background sync every 15 seconds + on tab focus
+    const interval = setInterval(() => { if (active) fetchTournaments(true); }, 15000);
+    const onFocus = () => { if (active) fetchTournaments(true); };
+    window.addEventListener('focus', onFocus);
     return () => {
       active = false;
       clearTimeout(init);
       clearInterval(interval);
+      window.removeEventListener('focus', onFocus);
     };
   }, [fetchTournaments]);
 
@@ -264,9 +266,18 @@ export default function Tournaments() {
             <div style={{ fontFamily: 'Rajdhani', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
               {tournaments.length} total tournaments found
             </div>
-            <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 600 }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)', display: 'inline-block' }} />
-              Last updated: {getUpdateString()}
+            <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10, fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700 }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '4px 10px', borderRadius: 999, background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.28)', color: 'var(--green)' }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)', animation: 'live-pulse 1.4s infinite', display: 'inline-block' }} />
+                LIVE SYNC · {getUpdateString()}
+              </span>
+              <button
+                type="button"
+                onClick={() => fetchTournaments(true)}
+                style={{ padding: '4px 10px', borderRadius: 999, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--text-secondary)', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.75rem' }}
+              >
+                Refresh
+              </button>
             </div>
           </div>
         </div>
