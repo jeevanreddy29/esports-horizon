@@ -7,7 +7,6 @@ export const GAME_LOGOS = {
   'MLBB': 'https://upload.wikimedia.org/wikipedia/en/thumb/8/85/Mobile_Legends_Bang_Bang_logo.png/512px-Mobile_Legends_Bang_Bang_logo.png',
   'Free Fire India': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Free_Fire_logo.svg/512px-Free_Fire_logo.svg.png',
   'Free Fire Max': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Free_Fire_logo.svg/512px-Free_Fire_logo.svg.png',
-  'Pokemon Unite': 'https://upload.wikimedia.org/wikipedia/en/thumb/9/90/Pok%C3%A9mon_Unite_logo.png/512px-Pok%C3%A9mon_Unite_logo.png',
   'Minecraft': 'https://upload.wikimedia.org/wikipedia/en/thumb/5/51/Minecraft_cover.png/512px-Minecraft_cover.png',
   'CS2': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Counter-Strike_2_text_logo.svg/512px-Counter-Strike_2_text_logo.svg.png',
   'Call of Duty Mobile': 'https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Call_of_Duty_Mobile_logo.png/512px-Call_of_Duty_Mobile_logo.png',
@@ -38,7 +37,6 @@ export const GameIcon = ({ game, size = 24, className = '', style = {} }) => {
     const n = name.trim();
     if (n === 'Free Fire India' || n === 'Free Fire Max') return 'FFI';
     if (n === 'Call of Duty Mobile') return 'CODM';
-    if (n === 'Pokemon Unite') return 'PU';
     if (n === 'MLBB') return 'MLBB';
     if (n === 'BGMI') return 'BGMI';
     if (n === 'Minecraft') return 'MC';

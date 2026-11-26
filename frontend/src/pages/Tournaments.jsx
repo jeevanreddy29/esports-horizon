@@ -8,7 +8,7 @@ import CountdownTimer from '../components/CountdownTimer';
 import { GameIcon } from '../utils/gameLogos';
 import toast from 'react-hot-toast';
 
-const GAMES = ['all', 'Valorant', 'BGMI', 'MLBB', 'Free Fire India', 'Pokemon Unite', 'Minecraft', 'CS2', 'Call of Duty Mobile', 'Tekken 8', 'Clash Royale', 'FC Mobile'];
+const GAMES = ['all', 'Valorant', 'BGMI', 'MLBB', 'Free Fire India', 'Minecraft', 'CS2', 'Call of Duty Mobile', 'Tekken 8', 'Clash Royale', 'FC Mobile'];
 const STATUSES = ['all', 'live', 'upcoming', 'past'];
 
 function TournamentCard({ t, isSkeleton }) {

@@ -15,7 +15,7 @@ const INDIAN_STATES = [
   'Uttarakhand', 'West Bengal', 'Delhi', 'Jammu & Kashmir', 'Ladakh',
 ];
 
-const GAMES_LIST = ['Valorant', 'BGMI', 'MLBB', 'Free Fire India', 'Pokemon Unite', 'Minecraft', 'CS2', 'Call of Duty Mobile', 'Tekken 8', 'Clash Royale', 'FC Mobile'];
+const GAMES_LIST = ['Valorant', 'BGMI', 'MLBB', 'Free Fire India', 'Minecraft', 'CS2', 'Call of Duty Mobile', 'Tekken 8', 'Clash Royale', 'FC Mobile'];
 
 const STEPS = ['Account Info', 'Gaming Profile', 'Ready!'];
 

@@ -14,7 +14,6 @@ const GAMES = [
   { name: 'BGMI', color: '#FF6B35', players: '12K+', tournaments: 38 },
   { name: 'MLBB', color: '#06B6D4', players: '6K+', tournaments: 20 },
   { name: 'Free Fire India', color: '#FF9500', players: '15K+', tournaments: 42 },
-  { name: 'Pokemon Unite', color: '#8B5CF6', players: '2K+', tournaments: 9 },
   { name: 'Minecraft', color: '#10B981', players: '18K+', tournaments: 10 },
   { name: 'CS2', color: '#F59E0B', players: '5K+', tournaments: 16 },
   { name: 'Call of Duty Mobile', color: '#10B981', players: '9K+', tournaments: 28 },
@@ -41,33 +40,39 @@ const TICKER_ITEMS = [
   'NEWS — Team Hind dominates FFMIC Spring Grand Finals in Ahmedabad',
 ];
 
+function formatRecentDate(daysAgo) {
+  const d = new Date();
+  d.setDate(d.getDate() - daysAgo);
+  return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
 const NEWS = [
   {
     id: 1,
-    title: 'NODWIN Gaming Announces Masters Series Season 3',
-    date: 'April 20, 2026',
+    title: 'NODWIN Gaming Announces Masters Series Next Season',
+    date: formatRecentDate(1),
     source: 'Esports Insider',
     category: 'Tournament',
     color: '#FF6B35',
-    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80\u0026w=500',
+    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=500',
   },
   {
     id: 2,
     title: 'India Wins Big at International Valorant Invitationals',
-    date: 'April 18, 2026',
+    date: formatRecentDate(3),
     source: 'AFK Gaming',
     category: 'News',
     color: '#FF4655',
-    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80\u0026w=500',
+    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=500',
   },
   {
     id: 3,
     title: 'Top 5 BGMI Strategies for the Upcoming Pro League',
-    date: 'April 15, 2026',
+    date: formatRecentDate(5),
     source: 'TalkEsport',
     category: 'Guide',
     color: '#00F3FF',
-    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80\u0026w=500',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=500',
   },
 ];
 
@@ -353,13 +358,21 @@ export default function Home() {
     };
   }, []);
 
+  const featured = liveT[0] || upcomingT[0];
+
+  const liveTickerItems = [...liveT, ...upcomingT].map(t => {
+    const tag = t.status === 'live' ? 'LIVE' : 'UPCOMING';
+    return `${tag} — ${t.title} (${t.game}) — ${t.prize_pool} · ${t.slots_filled}/${t.slots} Slots`;
+  });
+  const tickerList = liveTickerItems.length > 0 ? liveTickerItems : TICKER_ITEMS;
+
   return (
     <div>
       {/* ── TICKER ── */}
       <div style={{ paddingTop: 72 }}>
         <div className="ticker-wrap">
           <div className="ticker-content">
-            {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
+            {[...tickerList, ...tickerList].map((item, i) => (
               <span key={i} className="ticker-item">
                 <span className="dot" />
                 {item}
@@ -421,7 +434,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Hero Visual: Option A Faceit Spotlight Card */}
+            {/* Hero Visual: Real-Time Featured Tournament Card */}
             <div className="anim-slide-right delay-300 hero-visual-container" style={{ width: '100%', maxWidth: 440, margin: '0 auto' }}>
               <div className="glass-card" style={{
                 background: 'var(--bg-card)',
@@ -433,41 +446,49 @@ export default function Home() {
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#ef4444', animation: 'live-pulse 1s infinite' }} />
-                    <span style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.8rem', color: '#ef4444', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                      FEATURED TOURNAMENT
+                    <span style={{ width: 8, height: 8, borderRadius: '50%', background: featured?.status === 'live' ? '#ef4444' : 'var(--cyan)', animation: 'live-pulse 1s infinite' }} />
+                    <span style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.8rem', color: featured?.status === 'live' ? '#ef4444' : 'var(--cyan)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                      {featured?.status === 'live' ? 'LIVE TOURNAMENT' : 'UPCOMING SPOTLIGHT'}
                     </span>
                   </div>
                   <span style={{ background: 'var(--gold-dim)', color: 'var(--gold)', border: '1px solid var(--gold-border)', padding: '2px 8px', borderRadius: 4, fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.75rem' }}>
-                    TIER 1 PRO
+                    {featured?.game || 'ESPORTS'}
                   </span>
                 </div>
 
-                <h3 style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.35rem', color: '#fff', marginBottom: 8 }}>
-                  BMPS 2026 Pro Series
+                <h3 style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.3rem', color: '#fff', marginBottom: 8 }}>
+                  {featured ? featured.title : 'Loading Live Arena...'}
                 </h3>
                 <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: 20 }}>
-                  KRAFTON Official • 64 Elite Invited Squads
+                  {featured ? `${featured.organizer || 'Official Partner'} • ${featured.format || 'SQUAD'}` : 'Syncing real-time tournament feed'}
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
                   <div style={{ background: 'var(--bg-tertiary)', padding: '12px 14px', borderRadius: 8, border: '1px solid var(--border-subtle)' }}>
                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase' }}>Prize Pool</div>
-                    <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.2rem', color: 'var(--gold)' }}>₹2,00,00,000</div>
+                    <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.15rem', color: 'var(--gold)' }}>
+                      {featured?.prize_pool || '—'}
+                    </div>
                   </div>
                   <div style={{ background: 'var(--bg-tertiary)', padding: '12px 14px', borderRadius: 8, border: '1px solid var(--border-subtle)' }}>
                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase' }}>Region</div>
-                    <div style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '1.1rem', color: '#fff' }}>All India Finals</div>
+                    <div style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '1.05rem', color: '#fff' }}>
+                      {featured?.location || 'All India'}
+                    </div>
                   </div>
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', background: 'rgba(255,255,255,0.02)', borderRadius: 8, border: '1px solid var(--border-subtle)', marginBottom: 20 }}>
-                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Status: Group Stages Live</span>
-                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.85rem', color: '#10b981' }}>64 / 64 Teams</span>
+                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                    Status: {featured?.status === 'live' ? 'Live Now' : 'Registration Open'}
+                  </span>
+                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.85rem', color: '#10b981' }}>
+                    {featured ? `${featured.slots_filled} / ${featured.slots} Teams` : 'Syncing...'}
+                  </span>
                 </div>
 
-                <Link to="/tournaments" className="btn btn-primary" style={{ width: '100%', textAlign: 'center' }}>
-                  Explore All Competitions →
+                <Link to={featured ? `/tournaments/${featured._id || featured.id}` : '/tournaments'} className="btn btn-primary" style={{ width: '100%', textAlign: 'center' }}>
+                  {featured ? 'View Live Details →' : 'Explore All Competitions →'}
                 </Link>
               </div>
             </div>

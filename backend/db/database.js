@@ -21,29 +21,35 @@ try {
   };
 }
 
+function daysFromNow(offsetDays) {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  return d.toISOString().split('T')[0];
+}
+
 const DEFAULT_TOURNAMENTS = [
   // ===== LIVE & ACTIVE =====
   {
     id: 1,
-    title: 'Battlegrounds Mobile India Pro Series (BMPS) 2026',
+    title: 'Battlegrounds Mobile India Pro Series (BMPS)',
     game: 'BGMI', status: 'live',
     prize_pool: '₹2,00,00,000', slots: 64, slots_filled: 64,
-    start_date: '2026-05-06', end_date: '2026-06-21',
-    registration_deadline: '2026-05-02',
+    start_date: daysFromNow(-3), end_date: daysFromNow(12),
+    registration_deadline: daysFromNow(-5),
     location: 'Online/Offline (Grand Finals)',
     organizer: 'KRAFTON India',
     banner_color: '#f59e0b',
     registration_link: 'Invite Only',
     description: 'The flagship pro series returns. 64 elite invited teams battle for a massive 2 Crore prize pool. Watch live on Krafton India Esports YouTube.',
-    rules: ['Invite Only', 'Pro Tier Teams', 'Official BMPS 2026 Rulebook']
+    rules: ['Invite Only', 'Pro Tier Teams', 'Official BMPS Rulebook']
   },
   {
     id: 2,
     title: 'Skyesports Free Fire India Grand Prix',
     game: 'Free Fire India', status: 'live',
     prize_pool: '₹12,00,000', slots: 128, slots_filled: 110,
-    start_date: '2026-04-22', end_date: '2026-05-05',
-    registration_deadline: '2026-04-20',
+    start_date: daysFromNow(-2), end_date: daysFromNow(8),
+    registration_deadline: daysFromNow(2),
     location: 'Online — South Asia',
     organizer: 'Skyesports',
     banner_color: '#e5a93c',
@@ -55,69 +61,69 @@ const DEFAULT_TOURNAMENTS = [
   // ===== UPCOMING =====
   {
     id: 3,
-    title: 'VALORANT Challengers 2026 South Asia: Split 2',
+    title: 'VALORANT Challengers South Asia: Split 2',
     game: 'Valorant', status: 'upcoming',
-    prize_pool: '₹20,00,000', slots: 32, slots_filled: 12,
-    start_date: '2026-06-10', end_date: '2026-07-15',
-    registration_deadline: '2026-06-05',
+    prize_pool: '₹20,00,000', slots: 32, slots_filled: 18,
+    start_date: daysFromNow(5), end_date: daysFromNow(28),
+    registration_deadline: daysFromNow(3),
     location: 'Online — South Asia',
     organizer: 'Riot Games & NODWIN',
     banner_color: '#ef4444',
     registration_link: 'Open for Registration',
-    description: 'The road to Ascension continues. Split 2 qualifiers will begin soon for the premier VALORANT circuit in South Asia.',
+    description: 'The road to Ascension continues. Split 2 qualifiers begin soon for the premier VALORANT circuit in South Asia.',
     rules: ['Immortal 3+ Rank', 'Indian/SA Citizenship', '5v5 Tactical Shooter']
   },
   {
     id: 4,
-    title: 'Free Fire India Cup (FFIC) 2026: Fall',
+    title: 'Free Fire India Cup (FFIC): Season Open',
     game: 'Free Fire India', status: 'upcoming',
-    prize_pool: '₹1,00,00,000', slots: 512, slots_filled: 280,
-    start_date: '2026-08-15', end_date: '2026-09-30',
-    registration_deadline: '2026-08-10',
+    prize_pool: '₹1,00,00,000', slots: 512, slots_filled: 342,
+    start_date: daysFromNow(10), end_date: daysFromNow(40),
+    registration_deadline: daysFromNow(7),
     location: 'Online — All India',
     organizer: 'Garena India',
     banner_color: '#f59e0b',
     registration_link: 'Register Now',
-    description: 'The official Fall season major. Registration will open in late July. Top teams qualify for the FFWS Global Finals.',
+    description: 'The official Free Fire India major. Open qualifiers are filling fast — top teams qualify for the National Grand Finals.',
     rules: ['Account Level 40+', 'Squad Mode', 'Mobile Only']
   },
   {
     id: 5,
     title: 'ESL India: CS2 Pro League S1',
     game: 'CS2', status: 'upcoming',
-    prize_pool: '₹15,00,000', slots: 16, slots_filled: 8,
-    start_date: '2026-05-20', end_date: '2026-06-05',
-    registration_deadline: '2026-05-15',
+    prize_pool: '₹15,00,000', slots: 16, slots_filled: 11,
+    start_date: daysFromNow(14), end_date: daysFromNow(30),
+    registration_deadline: daysFromNow(10),
     location: 'Online — Low Latency',
     organizer: 'ESL Faceit Group',
     banner_color: '#00d2ff',
     registration_link: 'https://play.eslgaming.com/india',
-    description: 'The first official ESL CS2 Pro League for the Indian region. High stakes, elite competition.',
+    description: 'The official ESL CS2 Pro League for the Indian region. High stakes, elite competition.',
     rules: ['Prime Status', 'Steam Level 10+', 'Anti-Cheat Mandatory']
   },
 
   // ===== PAST =====
   {
     id: 6,
-    title: 'Free Fire India Cup (FFIC) 2026: Spring',
+    title: 'Free Fire India Cup (FFIC): Invitational',
     game: 'Free Fire India', status: 'past',
     prize_pool: '₹1,00,00,000', slots: 256, slots_filled: 256,
-    start_date: '2026-03-20', end_date: '2026-04-26',
-    registration_deadline: '2026-03-15',
+    start_date: daysFromNow(-32), end_date: daysFromNow(-12),
+    registration_deadline: daysFromNow(-36),
     location: 'Offline — Ahmedabad (Finals)',
     organizer: 'Garena India',
     banner_color: '#8b5cf6',
     registration_link: 'Completed',
-    description: 'Congratulations to Team Hind for winning the FFIC 2026 Spring Cup! They dominated the Grand Finals at Mahatma Mandir.',
+    description: 'Congratulations to Team Hind for winning the FFIC Invitational Cup! They dominated the Grand Finals at Mahatma Mandir.',
     rules: ['Completed Tournament']
   },
   {
     id: 7,
-    title: 'VALORANT Challengers 2026 South Asia: Split 1',
+    title: 'VALORANT Challengers South Asia: Split 1',
     game: 'Valorant', status: 'past',
     prize_pool: '₹20,00,000', slots: 32, slots_filled: 32,
-    start_date: '2026-03-16', end_date: '2026-04-09',
-    registration_deadline: '2026-03-10',
+    start_date: daysFromNow(-40), end_date: daysFromNow(-18),
+    registration_deadline: daysFromNow(-45),
     location: 'Online — South Asia',
     organizer: 'Riot Games & NODWIN',
     banner_color: '#ec4899',
