@@ -66,12 +66,12 @@ export default function Community() {
           {STATS.map((s, i) => (
             <motion.div
               key={i}
-              className="glass-card shape-oval"
+              className="glass-card"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              style={{ padding: '30px 20px', textAlign: 'center', borderTop: `4px solid ${s.color}` }}
+              style={{ padding: '30px 20px', textAlign: 'center', borderTop: `3px solid ${s.color}`, borderRadius: 12 }}
             >
               <div style={{ fontSize: '2.5rem', color: s.color, marginBottom: 16 }}>{s.icon}</div>
               <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '2rem', color: '#fff', marginBottom: 4 }}>{s.value}</div>
@@ -111,7 +111,7 @@ export default function Community() {
                       <span>{item.source}</span>
                     </div>
                     <h3 style={{ fontFamily: 'Orbitron', fontWeight: 800, fontSize: '1.1rem', color: '#fff', lineHeight: 1.5, marginBottom: 20 }}>{item.title}</h3>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--cyan)', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.85rem', letterSpacing: '0.05em', cursor: 'pointer' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--gold)', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.85rem', letterSpacing: '0.05em', cursor: 'pointer' }}>
                       READ MORE <FaArrowRight style={{ fontSize: '0.7rem' }} />
                     </div>
                   </div>
@@ -122,12 +122,12 @@ export default function Community() {
         </div>
 
         {/* Contact Us */}
-        <h2 className="section-title anim-fade-up" style={{ textAlign: 'center', marginBottom: 40 }}>Contact <span className="gradient-text" style={{ color: 'var(--cyan)' }}>Us</span></h2>
+        <h2 className="section-title anim-fade-up" style={{ textAlign: 'center', marginBottom: 40 }}>Contact <span className="gradient-text">Us</span></h2>
         
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 30, maxWidth: 800, margin: '0 auto' }}>
           {[
             { id: 'mail', name: 'Gmail', icon: <FaEnvelope />, color: '#ea4335', desc: 'Send us an email for queries and support', action: 'esportshubindia@gmail.com', href: 'mailto:esportshubindia@gmail.com', delay: 0 },
-            { id: 'phone', name: 'Contact Number', icon: <FaPhone />, color: '#00F3FF', desc: 'Call us directly for immediate assistance', action: '+91 98765 43210', href: 'tel:+919876543210', delay: 0.1 },
+            { id: 'phone', name: 'Contact Number', icon: <FaPhone />, color: '#f5a623', desc: 'Call us directly for immediate assistance', action: '+91 98765 43210', href: 'tel:+919876543210', delay: 0.1 },
           ].map((ch) => (
             <motion.a
               key={ch.id}

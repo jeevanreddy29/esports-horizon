@@ -77,13 +77,13 @@ export default function Profile() {
 
   if (!user) return null;
 
-  const games = (() => { try { return JSON.parse(user.games || '[]'); } catch { return []; } })();
+  const games = Array.isArray(user.games)
+    ? user.games
+    : (() => { try { return JSON.parse(user.games || '[]'); } catch { return []; } })();
   const avatarLetter = user.name?.[0]?.toUpperCase() || '?';
-  const joinDate = user.created_at ? new Date(user.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Unknown';
 
   const liveReg = myTournaments.filter(t => t.status === 'live').length;
   const upcomingReg = myTournaments.filter(t => t.status === 'upcoming').length;
-  const pastReg = myTournaments.filter(t => t.status === 'past').length;
 
   return (
     <div className="page" style={{ background: 'var(--bg-primary)', position: 'relative', overflowX: 'hidden' }}>
@@ -91,12 +91,12 @@ export default function Profile() {
       {/* Background Decor */}
       <div style={{
         position: 'absolute', top: 0, left: 0, right: 0, height: '60vh',
-        background: 'radial-gradient(circle at 50% 0%, rgba(123,47,255,0.15) 0%, transparent 70%)',
+        background: 'radial-gradient(circle at 50% 0%, rgba(245,166,35,0.08) 0%, transparent 70%)',
         zIndex: 0, pointerEvents: 'none'
       }} />
 
       <div className="container" style={{ padding: '40px 24px 80px', position: 'relative', zIndex: 1 }}>
-        <button onClick={() => navigate(-1)} className="btn btn-secondary shape-pill" style={{ marginBottom: 32, display: 'flex', alignItems: 'center', gap: 8, padding: '8px 16px' }}>
+        <button onClick={() => navigate(-1)} className="btn btn-secondary" style={{ marginBottom: 32, display: 'flex', alignItems: 'center', gap: 8, padding: '8px 16px' }}>
           <FaArrowLeft /> Back
         </button>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 32, alignItems: 'start' }}>
@@ -112,21 +112,22 @@ export default function Profile() {
               marginTop: 40 
             }}
           >
-            <div className="glass-card shape-oval" style={{
-              padding: '50px 32px',
+            <div className="glass-card" style={{
+              padding: '44px 28px',
               textAlign: 'center',
-              boxShadow: '0 30px 60px rgba(0,0,0,0.6)',
+              borderRadius: 16,
+              boxShadow: '0 24px 50px rgba(0,0,0,0.55)',
               overflow: 'visible'
             }}>
-              {/* Avatar with Glow */}
+              {/* Avatar */}
               <div className="shape-circle" style={{ 
-                width: 130, height: 130, margin: '-90px auto 24px',
-                background: 'linear-gradient(135deg, #1a1a3a, #0a0a1a)',
-                border: '4px solid var(--purple)',
+                width: 120, height: 120, margin: '-80px auto 24px',
+                background: 'linear-gradient(135deg, #1a1d26, #0a0b0e)',
+                border: '3px solid var(--gold)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: 'Orbitron', fontWeight: 900, fontSize: '3.5rem',
+                fontFamily: 'Orbitron', fontWeight: 900, fontSize: '3rem',
                 color: '#fff', position: 'relative',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(123,47,255,0.3)',
+                boxShadow: '0 16px 35px rgba(0,0,0,0.5)',
                 overflow: 'hidden'
               }}>
                 {user.avatar_url ? (

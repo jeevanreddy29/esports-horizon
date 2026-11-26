@@ -81,8 +81,15 @@ export default function ChatBot() {
 
   const handleKey = (e) => { if (e.key === 'Enter') sendMessage(); };
 
-  const formatText = (text) =>
-    text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>');
+  const formatText = (text) => {
+    const escaped = String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+    return escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>');
+  };
 
   const closeBot = () => {
     setOpen(false);
@@ -97,34 +104,33 @@ export default function ChatBot() {
           position: 'fixed', bottom: 104, right: 28,
           width: 'min(380px, calc(100vw - 40px))',
           maxHeight: 540,
-          borderRadius: 20,
-          background: 'rgba(6,6,22,0.98)',
-          border: '1px solid rgba(0,243,255,0.2)',
-          boxShadow: '0 24px 60px rgba(0,0,0,0.8), 0 0 60px rgba(123,47,255,0.15)',
+          borderRadius: 16,
+          background: '#111318',
+          border: '1px solid rgba(245,166,35,0.25)',
+          boxShadow: '0 24px 60px rgba(0,0,0,0.85)',
           zIndex: 10000,
           display: 'flex', flexDirection: 'column', overflow: 'hidden',
-          backdropFilter: 'blur(30px)',
+          backdropFilter: 'blur(20px)',
           animation: 'bounce-in 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards',
         }}>
           {/* Header */}
           <div style={{
             padding: '16px 20px',
-            background: 'linear-gradient(135deg, rgba(123,47,255,0.35), rgba(0,243,255,0.12))',
-            borderBottom: '1px solid rgba(255,255,255,0.06)',
+            background: 'linear-gradient(135deg, rgba(245,166,35,0.14), rgba(255,255,255,0.02))',
+            borderBottom: '1px solid rgba(255,255,255,0.08)',
             display: 'flex', alignItems: 'center', gap: 12,
             flexShrink: 0,
           }}>
             <div style={{
-              width: 42, height: 42, borderRadius: 14,
-              background: 'linear-gradient(135deg, #7b2fff, #00f3ff)',
+              width: 42, height: 42, borderRadius: 10,
+              background: 'linear-gradient(135deg, #f5a623, #d48806)',
+              color: '#0a0b0e',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '1.3rem', flexShrink: 0,
-              boxShadow: '0 0 20px rgba(0,243,255,0.4)',
-              border: '1px solid rgba(0,243,255,0.3)',
             }}><FaBrain style={{ fontSize: '1.3rem' }} /></div>
             <div style={{ flex: 1 }}>
               <div style={{ fontFamily: 'Orbitron', fontSize: '0.85rem', fontWeight: 700, marginBottom: 2 }}>
-                NeuroGamer <span style={{ color: 'var(--cyan)', fontSize: '0.7rem' }}>AI</span>
+                NeuroGamer <span style={{ color: 'var(--gold)', fontSize: '0.7rem' }}>AI</span>
               </div>
               <div style={{
                 fontSize: '0.72rem', color: '#10B981',
@@ -157,29 +163,31 @@ export default function ChatBot() {
               <div key={i} style={{ display: 'flex', gap: 8, flexDirection: msg.role === 'user' ? 'row-reverse' : 'row', animation: 'fadeInUp 0.3s ease' }}>
                 {msg.role === 'bot' && (
                   <div style={{
-                    width: 28, height: 28, borderRadius: 9, flexShrink: 0,
-                    background: 'linear-gradient(135deg, #7b2fff, #00f3ff)',
+                    width: 28, height: 28, borderRadius: 8, flexShrink: 0,
+                    background: 'linear-gradient(135deg, #f5a623, #d48806)',
+                    color: '#0a0b0e',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '0.85rem', boxShadow: '0 0 10px rgba(0,243,255,0.3)',
+                    fontSize: '0.85rem',
                   }}><FaBrain /></div>
                 )}
                 <div dangerouslySetInnerHTML={{ __html: formatText(msg.text) }} style={{
-                  padding: '10px 14px', borderRadius: msg.role === 'bot' ? '4px 14px 14px 14px' : '14px 4px 14px 14px',
+                  padding: '10px 14px', borderRadius: msg.role === 'bot' ? '4px 12px 12px 12px' : '12px 4px 12px 12px',
                   fontSize: '0.865rem', lineHeight: 1.55, maxWidth: '82%',
                   background: msg.role === 'bot'
-                    ? 'rgba(123,47,255,0.18)'
-                    : 'linear-gradient(135deg, #7b2fff, #00f3ff)',
-                  border: msg.role === 'bot' ? '1px solid rgba(123,47,255,0.3)' : 'none',
-                  color: '#fff',
+                    ? 'rgba(255,255,255,0.04)'
+                    : 'linear-gradient(135deg, #f5a623, #d48806)',
+                  border: msg.role === 'bot' ? '1px solid rgba(255,255,255,0.08)' : 'none',
+                  color: msg.role === 'bot' ? '#f3f4f6' : '#0a0b0e',
+                  fontWeight: msg.role === 'bot' ? 400 : 600,
                 }} />
               </div>
             ))}
             {loading && (
               <div style={{ display: 'flex', gap: 8 }}>
-                <div style={{ width: 28, height: 28, borderRadius: 9, background: 'linear-gradient(135deg, #7b2fff, #00f3ff)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', flexShrink: 0 }}><FaBrain /></div>
-                <div className="bot-msg" style={{ alignSelf: 'flex-start', background: 'rgba(0,243,255,0.05)', border: '1px solid rgba(0,243,255,0.1)', padding: '12px 16px', borderRadius: '4px 16px 16px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ width: 14, height: 14, border: '2px solid rgba(0,243,255,0.4)', borderTopColor: 'var(--cyan)', borderRadius: '50%', animation: 'rotate 1s linear infinite' }} />
-                  <span style={{ fontFamily: 'Rajdhani', fontSize: '0.85rem', color: 'var(--cyan)', fontWeight: 600 }}>Querying tournament database...</span>
+                <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg, #f5a623, #d48806)', color: '#0a0b0e', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', flexShrink: 0 }}><FaBrain /></div>
+                <div className="bot-msg" style={{ alignSelf: 'flex-start', background: 'rgba(245,166,35,0.06)', border: '1px solid rgba(245,166,35,0.2)', padding: '12px 16px', borderRadius: '4px 12px 12px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ width: 14, height: 14, border: '2px solid rgba(245,166,35,0.4)', borderTopColor: 'var(--gold)', borderRadius: '50%', animation: 'rotate 1s linear infinite' }} />
+                  <span style={{ fontFamily: 'Rajdhani', fontSize: '0.85rem', color: 'var(--gold)', fontWeight: 600 }}>Querying tournament database...</span>
                 </div>
               </div>
             )}
@@ -190,15 +198,15 @@ export default function ChatBot() {
             <div style={{ padding: '0 14px 10px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
               {QUICK_PROMPTS.map(q => (
                 <button key={q.label} onClick={() => sendMessage(q.label)} style={{
-                  padding: '5px 11px', borderRadius: 100,
-                  background: 'rgba(0,243,255,0.07)', border: '1px solid rgba(0,243,255,0.2)',
+                  padding: '5px 11px', borderRadius: 8,
+                  background: 'rgba(245,166,35,0.08)', border: '1px solid rgba(245,166,35,0.2)',
                   color: 'var(--text-secondary)', fontSize: '0.75rem',
                   cursor: 'pointer', transition: 'all 0.2s',
                   fontFamily: 'Rajdhani', fontWeight: 600,
                   display: 'flex', alignItems: 'center', gap: 5,
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,243,255,0.15)'; e.currentTarget.style.color = 'var(--cyan)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,243,255,0.07)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(245,166,35,0.16)'; e.currentTarget.style.color = 'var(--gold)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(245,166,35,0.08)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
                 ><span style={{ opacity: 0.8 }}>{q.icon}</span> {q.label}</button>
               ))}
             </div>
@@ -226,17 +234,17 @@ export default function ChatBot() {
                 fontFamily: 'Inter',
                 transition: 'border-color 0.2s',
               }}
-              onFocus={e => { e.target.style.borderColor = 'rgba(0,243,255,0.4)'; }}
+              onFocus={e => { e.target.style.borderColor = 'rgba(245,166,35,0.5)'; }}
               onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
             />
             <button onClick={() => sendMessage()} disabled={loading} style={{
               width: 42, height: 42,
               borderRadius: 10, flexShrink: 0,
-              background: loading ? 'rgba(123,47,255,0.3)' : 'linear-gradient(135deg, #7b2fff, #00f3ff)',
+              background: loading ? 'rgba(245,166,35,0.3)' : 'linear-gradient(135deg, #f5a623, #d48806)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer',
               transition: 'all 0.2s',
-              color: '#fff',
+              color: '#0a0b0e',
             }}><FaPaperPlane /></button>
           </div>
         </div>
@@ -245,14 +253,14 @@ export default function ChatBot() {
       {/* Toggle Button */}
       <button id="chatbot-toggle-btn" onClick={() => setOpen(o => !o)} style={{
         position: 'fixed', bottom: 28, right: 28,
-        width: 62, height: 62, borderRadius: '50%', zIndex: 10000,
-        background: open ? 'linear-gradient(135deg, #ff2d78, #7b2fff)' : 'linear-gradient(135deg, #7b2fff, #00f3ff)',
-        border: 'none', cursor: 'pointer',
+        width: 58, height: 58, borderRadius: '50%', zIndex: 10000,
+        background: open ? '#1e212b' : 'linear-gradient(135deg, #f5a623, #d48806)',
+        color: open ? '#fff' : '#0a0b0e',
+        border: open ? '1px solid rgba(255,255,255,0.15)' : 'none', cursor: 'pointer',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: open ? '1.4rem' : '1.8rem',
-        boxShadow: open ? '0 0 30px rgba(255,45,120,0.5)' : '0 0 30px rgba(123,47,255,0.6)',
-        transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-        animation: open ? 'none' : 'pulse-glow 2.5s ease-in-out infinite',
+        fontSize: open ? '1.3rem' : '1.6rem',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.6)',
+        transition: 'all 0.25s ease',
       }}
       title="NeuroGamer AI">
         {open ? <FaTimes style={{ fontSize: '1.2rem' }} /> : <FaBrain style={{ fontSize: '1.6rem' }} />}

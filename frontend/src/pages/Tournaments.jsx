@@ -68,6 +68,8 @@ function TournamentCard({ t, isSkeleton }) {
 
             {t.status === 'live' ? (
               <span className="badge badge-live">LIVE NOW</span>
+            ) : t.status === 'past' ? (
+              <span className="badge" style={{ background: 'rgba(255,255,255,0.08)', color: 'var(--text-muted)', border: '1px solid rgba(255,255,255,0.15)' }}>COMPLETED</span>
             ) : (
               <span className="badge badge-upcoming">UPCOMING</span>
             )}
@@ -183,10 +185,18 @@ export default function Tournaments() {
   }, [game, status, search, minPrize, maxPrize, format, region]);
 
   useEffect(() => {
-    fetchTournaments();
+    let active = true;
+    const run = () => {
+      if (active) fetchTournaments();
+    };
+    const init = setTimeout(run, 0);
     // Auto-refresh every 60 seconds
-    const interval = setInterval(fetchTournaments, 60000);
-    return () => clearInterval(interval);
+    const interval = setInterval(run, 60000);
+    return () => {
+      active = false;
+      clearTimeout(init);
+      clearInterval(interval);
+    };
   }, [fetchTournaments]);
 
   const liveCt = tournaments.filter(t => t.status === 'live').length;

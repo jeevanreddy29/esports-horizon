@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const GAME_LOGOS = {
   'Valorant': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Valorant_logo_-_pink_color_version.svg/512px-Valorant_logo_-_pink_color_version.svg.png',
   'BGMI': 'https://upload.wikimedia.org/wikipedia/en/2/2f/Battlegrounds_Mobile_India_logo.png',

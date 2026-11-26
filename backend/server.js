@@ -55,9 +55,8 @@ app.get(['/api/health', '/health'], (req, res) => {
 
 // Local server start (not used in Vercel serverless)
 if (require.main === module) {
-  const path = require('path');
   app.use(express.static(path.join(__dirname, '../frontend/dist')));
-  app.get('/:path*', (req, res) => {
+  app.get('*', (req, res) => {
     if (req.path.startsWith('/api/')) return res.status(404).json({ error: 'API endpoint not found' });
     res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
   });

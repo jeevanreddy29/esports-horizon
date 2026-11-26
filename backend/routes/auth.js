@@ -179,7 +179,12 @@ router.post('/update', async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) return res.status(401).json({ error: 'No token' });
-    const decoded = jwt.verify(token, JWT_SECRET);
+    let decoded;
+    try {
+      decoded = jwt.verify(token, JWT_SECRET);
+    } catch {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
 
     const { name, state, games, avatar_url } = req.body;
     const updateData = {};
@@ -197,10 +202,19 @@ router.post('/update', async (req, res) => {
         .select('id, name, email, state, games, avatar_url, created_at')
         .single();
       if (!error && data) user = data;
-    } catch (e) {}
+    } catch {}
+
+    const emailKey = decoded.email?.toLowerCase();
+    if (!user && emailKey && fallbackUsers.has(emailKey)) {
+      const existing = fallbackUsers.get(emailKey);
+      const updated = { ...existing, ...updateData };
+      fallbackUsers.set(emailKey, updated);
+      const { password: _, ...safe } = updated;
+      user = safe;
+    }
 
     if (!user) {
-      user = { id: decoded.id, email: decoded.email, ...updateData };
+      user = { id: decoded.id, name: decoded.name, email: decoded.email, ...updateData };
     }
 
     res.json({ user });
@@ -208,7 +222,5 @@ router.post('/update', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-module.exports = router;
 
 module.exports = router;

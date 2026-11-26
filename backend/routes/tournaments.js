@@ -55,6 +55,68 @@ router.get('/', async (req, res) => {
   }
 });
 
+function verifyAuth(req, res) {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) {
+    res.status(401).json({ error: 'Login required' });
+    return null;
+  }
+  try {
+    return jwt.verify(token, JWT_SECRET);
+  } catch {
+    res.status(401).json({ error: 'Invalid token' });
+    return null;
+  }
+}
+
+// GET /api/tournaments/user/registered
+router.get('/user/registered', async (req, res) => {
+  try {
+    const decoded = verifyAuth(req, res);
+    if (!decoded) return;
+
+    const { data: registrations, error } = await supabase
+      .from('registrations')
+      .select(`*, tournaments (*)`)
+      .eq('user_id', decoded.id);
+
+    if (error) throw error;
+    
+    const flattened = (registrations || []).map(r => {
+      const t = r.tournaments;
+      return Array.isArray(t) ? t[0] : t;
+    }).filter(Boolean);
+
+    res.json({ tournaments: flattened });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/tournaments/user/bookmarks
+router.get('/user/bookmarks', async (req, res) => {
+  try {
+    const decoded = verifyAuth(req, res);
+    if (!decoded) return;
+
+    const { data: bookmarks, error } = await supabase
+      .from('bookmarks')
+      .select('tournaments (*)')
+      .eq('user_id', decoded.id);
+
+    if (error) throw error;
+    
+    const flattened = (bookmarks || []).map(b => {
+      const t = b.tournaments;
+      return Array.isArray(t) ? t[0] : t;
+    }).filter(Boolean);
+
+    res.json({ tournaments: flattened });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /api/tournaments/:id
 router.get('/:id', async (req, res) => {
   try {
@@ -66,7 +128,7 @@ router.get('/:id', async (req, res) => {
         .eq('id', req.params.id)
         .single();
       if (!error && data) tournament = data;
-    } catch (e) {}
+    } catch {}
 
     if (!tournament) {
       tournament = DEFAULT_TOURNAMENTS.find(t => String(t.id) === String(req.params.id));
@@ -84,11 +146,9 @@ router.get('/:id', async (req, res) => {
 // POST /api/tournaments/:id/register
 router.post('/:id/register', async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) return res.status(401).json({ error: 'Login required to register' });
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = verifyAuth(req, res);
+    if (!decoded) return;
 
-    // Get tournament
     const { data: tournament, error: tErr } = await supabase
       .from('tournaments')
       .select('*')
@@ -99,24 +159,21 @@ router.post('/:id/register', async (req, res) => {
     if (tournament.status === 'past') return res.status(400).json({ error: 'Tournament has ended' });
     if (tournament.slots_filled >= tournament.slots) return res.status(400).json({ error: 'Tournament is full' });
 
-    // Check if already registered
     const { data: existing } = await supabase
       .from('registrations')
       .select('*')
       .eq('user_id', decoded.id)
       .eq('tournament_id', req.params.id)
-      .single();
+      .maybeSingle();
 
     if (existing) return res.status(409).json({ error: 'Already registered' });
 
-    // Insert registration
     const { error: insertErr } = await supabase
       .from('registrations')
       .insert([{ user_id: decoded.id, tournament_id: req.params.id }]);
 
     if (insertErr) throw insertErr;
 
-    // Increment slots filled
     await supabase
       .from('tournaments')
       .update({ slots_filled: tournament.slots_filled + 1 })
@@ -128,44 +185,18 @@ router.post('/:id/register', async (req, res) => {
   }
 });
 
-// GET /api/tournaments/user/registered
-router.get('/user/registered', async (req, res) => {
-  try {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) return res.status(401).json({ error: 'Login required' });
-    const decoded = jwt.verify(token, JWT_SECRET);
-
-    const { data: registrations, error } = await supabase
-      .from('registrations')
-      .select(`*, tournaments (*)`)
-      .eq('user_id', decoded.id);
-
-    if (error) throw error;
-    
-    const flattened = registrations.map(r => {
-      const t = r.tournaments;
-      return Array.isArray(t) ? t[0] : t;
-    }).filter(t => t !== null);
-
-    res.json({ tournaments: flattened });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
 // POST /api/tournaments/:id/bookmark
 router.post('/:id/bookmark', async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) return res.status(401).json({ error: 'Login required' });
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = verifyAuth(req, res);
+    if (!decoded) return;
 
     const { data: existing } = await supabase
       .from('bookmarks')
       .select('*')
       .eq('user_id', decoded.id)
       .eq('tournament_id', req.params.id)
-      .single();
+      .maybeSingle();
 
     if (existing) {
       await supabase.from('bookmarks').delete().eq('user_id', decoded.id).eq('tournament_id', req.params.id);
@@ -174,32 +205,6 @@ router.post('/:id/bookmark', async (req, res) => {
       await supabase.from('bookmarks').insert([{ user_id: decoded.id, tournament_id: req.params.id }]);
       return res.json({ success: true, saved: true });
     }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// GET /api/tournaments/user/bookmarks
-router.get('/user/bookmarks', async (req, res) => {
-  try {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) return res.status(401).json({ error: 'Login required' });
-    const decoded = jwt.verify(token, JWT_SECRET);
-
-    const { data: bookmarks, error } = await supabase
-      .from('bookmarks')
-      .select('tournaments (*)')
-      .eq('user_id', decoded.id);
-
-    if (error) throw error;
-    
-    // Flatten result and handle cases where tournaments might be returned as an array or object
-    const flattened = bookmarks.map(b => {
-      const t = b.tournaments;
-      return Array.isArray(t) ? t[0] : t;
-    }).filter(t => t !== null);
-
-    res.json({ tournaments: flattened });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

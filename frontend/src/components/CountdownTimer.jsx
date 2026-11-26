@@ -1,5 +1,19 @@
 import { useState, useEffect } from 'react';
 
+const Unit = ({ val, label }) => (
+  <div style={{ textAlign: 'center' }}>
+    <div style={{
+      fontFamily: 'Orbitron', fontWeight: 800, fontSize: '1.1rem',
+      color: 'var(--gold)', lineHeight: 1,
+    }}>
+      {String(val).padStart(2, '0')}
+    </div>
+    <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 2 }}>
+      {label}
+    </div>
+  </div>
+);
+
 export default function CountdownTimer({ targetDate, status }) {
   const [timeLeft, setTimeLeft] = useState(null);
 
@@ -45,26 +59,11 @@ export default function CountdownTimer({ targetDate, status }) {
 
   if (!timeLeft) return null;
 
-  const Unit = ({ val, label }) => (
-    <div style={{ textAlign: 'center' }}>
-      <div style={{
-        fontFamily: 'Orbitron', fontWeight: 800, fontSize: '1.1rem',
-        color: 'var(--cyan)', lineHeight: 1,
-        textShadow: '0 0 10px rgba(0,243,255,0.5)',
-      }}>
-        {String(val).padStart(2, '0')}
-      </div>
-      <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 2 }}>
-        {label}
-      </div>
-    </div>
-  );
-
   return (
     <div style={{
       padding: '8px 14px', borderRadius: 8,
-      background: 'rgba(0,243,255,0.06)',
-      border: '1px solid rgba(0,243,255,0.2)',
+      background: 'rgba(245,166,35,0.08)',
+      border: '1px solid rgba(245,166,35,0.25)',
       display: 'flex', alignItems: 'center', gap: 12,
     }}>
       <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>

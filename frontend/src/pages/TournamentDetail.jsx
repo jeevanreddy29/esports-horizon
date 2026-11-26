@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import { tournamentAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import Skeleton from '../components/common/Skeleton';
@@ -28,11 +27,11 @@ export default function TournamentDetail() {
 
     if (user) {
       tournamentAPI.myRegistrations()
-        .then(r => setRegistered(r.data?.tournaments?.some(t => (t._id || t.id) === id)))
+        .then(r => setRegistered(r.data?.tournaments?.some(t => String(t._id || t.id) === String(id))))
         .catch(() => {});
       
       tournamentAPI.myBookmarks()
-        .then(r => setBookmarked(r.data?.tournaments?.some(t => (t._id || t.id) === id)))
+        .then(r => setBookmarked(r.data?.tournaments?.some(t => String(t._id || t.id) === String(id))))
         .catch(() => {});
     }
   }, [id, user]);
@@ -44,7 +43,7 @@ export default function TournamentDetail() {
       await tournamentAPI.toggleBookmark(id);
       setBookmarked(!bookmarked);
       toast.success(bookmarked ? 'Removed from saved.' : 'Added to saved tournaments.');
-    } catch (err) {
+    } catch {
       toast.error('Action failed!');
     } finally {
       setBookmarking(false);
@@ -162,7 +161,7 @@ export default function TournamentDetail() {
               </button>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap', mb: 32 }}>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap', marginBottom: 32 }}>
               <div className="shape-soft-hex" style={{ 
                 width: 110, height: 110,
                 background: `${accentColor}22`, border: `2px solid ${accentColor}44`,
@@ -187,7 +186,7 @@ export default function TournamentDetail() {
               marginTop: 40, paddingTop: 40, borderTop: '1px solid rgba(255,255,255,0.05)' 
             }}>
               <div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', mb: 5 }}>Prize Pool</div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', marginBottom: 5 }}>Prize Pool</div>
                 <div style={{ 
                   fontFamily: 'Orbitron', fontWeight: 900, fontSize: '2rem',
                   background: 'linear-gradient(135deg, #ffd60a, #ff9500)', 
@@ -195,13 +194,13 @@ export default function TournamentDetail() {
                 }}>{tournament.prize_pool}</div>
               </div>
               <div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', mb: 5 }}>Launch Date</div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', marginBottom: 5 }}>Launch Date</div>
                 <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '1.4rem', color: '#fff' }}>
                   {tournament.start_date ? new Date(tournament.start_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : 'TBD'}
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', mb: 5 }}>Mode</div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', marginBottom: 5 }}>Mode</div>
                 <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '1.4rem', color: '#fff' }}>{tournament.location}</div>
               </div>
             </div>
@@ -262,7 +261,7 @@ export default function TournamentDetail() {
                 </div>
                 <div className="shape-pill" style={{ height: 12, background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
                   <div 
-                    style={{ height: '100%', width: isFull ? '100%' : '60%', background: isFull ? 'var(--pink)' : `linear-gradient(90deg, ${accentColor}, ${accentColor}aa)`, opacity: 0.6 }} 
+                    style={{ height: '100%', width: `${isFull ? 100 : Math.min(100, pct)}%`, background: isFull ? 'var(--pink)' : `linear-gradient(90deg, ${accentColor}, ${accentColor}aa)`, opacity: 0.8 }} 
                   />
                 </div>
               </div>
@@ -348,7 +347,7 @@ export default function TournamentDetail() {
               )}
 
               {!user && !isPast && !isFull && (
-                <p style={{ textAlign: 'center', mt: 20, color: 'var(--text-muted)', fontSize: '0.9rem', fontFamily: 'Rajdhani', marginTop: 20 }}>
+                <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.9rem', fontFamily: 'Rajdhani', marginTop: 20 }}>
                   Account required to follow. <Link to="/login" style={{ color: accentColor, fontWeight: 700 }}>LOGIN</Link>
                 </p>
               )}

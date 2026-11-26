@@ -23,7 +23,6 @@ export default function Navbar() {
   const [unreadCount, setUnreadCount] = useState(0);
   const [showNotif, setShowNotif] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  const [notifLoading, setNotifLoading] = useState(false);
   
   const handleLogout = () => {
     logout();
@@ -59,13 +58,11 @@ export default function Navbar() {
 
   const markRead = async (id) => {
     try {
-      await notificationAPI.markAsRead(id);
+      await notificationAPI.markRead(id);
       setNotifications(prev => prev.map(n => (n._id === id || n.id === id) ? { ...n, is_read: true } : n));
       setUnreadCount(prev => Math.max(0, prev - 1));
     } catch { toast.error('Check your connection'); }
   };
-
-  useEffect(() => { setMobileOpen(false); }, [location]);
 
   return (
     <>
@@ -185,26 +182,26 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`}>
         <button className="mobile-close" onClick={() => setMobileOpen(false)} aria-label="Close menu">&times;</button>
-        <Link to="/" className="navbar-logo" style={{ marginBottom: 16 }}>
+        <Link to="/" onClick={() => setMobileOpen(false)} className="navbar-logo" style={{ marginBottom: 16 }}>
           <img src={logo} alt="India Esports Hub" style={{ height: 50 }} />
         </Link>
         {navLinks.map(link => (
-          <Link key={link.to} to={link.to} className="nav-link" style={{ fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <Link key={link.to} to={link.to} onClick={() => setMobileOpen(false)} className="nav-link" style={{ fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: '0.9em', opacity: 0.8 }}>{link.icon}</span>
             {link.label}
           </Link>
         ))}
         {user ? (
           <>
-            <Link to="/profile" className="btn btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: 8 }}><FaUser /> Profile</Link>
+            <Link to="/profile" onClick={() => setMobileOpen(false)} className="btn btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: 8 }}><FaUser /> Profile</Link>
             <button onClick={handleLogout} className="btn" style={{
               background: 'rgba(255,45,120,0.15)', color: 'var(--pink)', border: '1px solid rgba(255,45,120,0.3)'
             }}>Logout</button>
           </>
         ) : (
           <>
-            <Link to="/login" className="btn btn-secondary">Login</Link>
-            <Link to="/signup" className="btn btn-primary">Join Now</Link>
+            <Link to="/login" onClick={() => setMobileOpen(false)} className="btn btn-secondary">Login</Link>
+            <Link to="/signup" onClick={() => setMobileOpen(false)} className="btn btn-primary">Join Now</Link>
           </>
         )}
       </div>
