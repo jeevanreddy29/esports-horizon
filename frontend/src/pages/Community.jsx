@@ -126,12 +126,11 @@ export default function Community() {
         
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 30, maxWidth: 800, margin: '0 auto' }}>
           {[
-            { id: 'mail', name: 'Gmail', icon: <FaEnvelope />, color: '#ea4335', desc: 'Send us an email for queries and support', action: 'esportshubindia@gmail.com', href: 'mailto:esportshubindia@gmail.com', delay: 0 },
-            { id: 'phone', name: 'Contact Number', icon: <FaPhone />, color: '#f5a623', desc: 'Call us directly for immediate assistance', action: '+91 98765 43210', href: 'tel:+919876543210', delay: 0.1 },
+            { id: 'mail', name: 'Official Support Email', icon: <FaEnvelope />, color: '#ea4335', desc: 'We are currently building our support desk', action: 'Coming Soon — Stay Tuned!', delay: 0 },
+            { id: 'phone', name: 'Player Helpline', icon: <FaPhone />, color: '#f5a623', desc: 'Direct player assistance channel', action: 'Launching Soon — Let You Know!', delay: 0.1 },
           ].map((ch) => (
-            <motion.a
+            <motion.div
               key={ch.id}
-              href={ch.href}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               whileHover={{ y: -8 }}
@@ -164,9 +163,9 @@ export default function Community() {
               <h3 style={{ fontFamily: 'Orbitron', color: '#fff', fontSize: '1.2rem', marginBottom: 8 }}>{ch.name}</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: 20, lineHeight: 1.5 }}>{ch.desc}</p>
               <div style={{ color: ch.color, fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.85rem', letterSpacing: '0.05em' }}>
-                {ch.action} →
+                {ch.action}
               </div>
-            </motion.a>
+            </motion.div>
           ))}
         </div>
 

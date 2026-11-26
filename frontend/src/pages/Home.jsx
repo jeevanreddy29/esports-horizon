@@ -861,26 +861,9 @@ export default function Home() {
               <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.8, marginBottom: 20 }}>
                 India&apos;s competitive esports platform connecting players, live tournaments, rankings, and communities.
               </p>
-              {/* Social icons */}
-              <div style={{ display: 'flex', gap: 10 }}>
-                {[
-                  { icon: <FaEnvelope />, color: '#ea4335', label: 'Gmail', href: 'mailto:esportshubindia@gmail.com' },
-                  { icon: <FaPhone />, color: '#00F3FF', label: 'Phone', href: 'tel:+919876543210' },
-                ].map(s => (
-                  <a key={s.label} href={s.href} title={s.label} style={{
-                    width: 38, height: 38, borderRadius: '50%', display: 'flex',
-                    alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem',
-                    background: 'rgba(255,255,255,0.03)', 
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    color: '#fff',
-                    transition: 'all 0.3s ease',
-                  }}
-                    onMouseEnter={e => { e.currentTarget.style.background = `${s.color}25`; e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.borderColor = s.color; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
-                  >
-                    {s.icon}
-                  </a>
-                ))}
+              {/* Support status */}
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 12px', borderRadius: 8, background: 'rgba(0,210,255,0.08)', border: '1px solid rgba(0,210,255,0.2)', color: 'var(--cyan)', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.82rem' }}>
+                Support Channels Launching Soon
               </div>
             </div>
 
@@ -923,22 +906,12 @@ export default function Home() {
             {/* Contact Us */}
             <div>
               <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '0.8rem', color: 'var(--pink)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Contact Us</div>
-              {[
-                { label: 'esportshubindia@gmail.com', icon: <FaEnvelope />, href: 'mailto:esportshubindia@gmail.com' },
-                { label: '+91 98765 43210', icon: <FaPhone />, href: 'tel:+919876543210' },
-              ].map(l => (
-                <a key={l.label} href={l.href} style={{
-                  display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-muted)', fontSize: '0.9rem',
-                  fontFamily: 'Rajdhani', fontWeight: 600, marginBottom: 12,
-                  transition: 'color 0.3s',
-                }}
-                  onMouseEnter={e => e.currentTarget.style.color = 'var(--pink)'}
-                  onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
-                >
-                  <span style={{ fontSize: '1.1rem' }}>{l.icon}</span>
-                  {l.label}
-                </a>
-              ))}
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontFamily: 'Rajdhani', fontWeight: 600, lineHeight: 1.6, marginBottom: 12 }}>
+                We&apos;re building our official support email &amp; helpline right now — we&apos;ll let you know soon!
+              </p>
+              <Link to="/contact" style={{ color: 'var(--cyan)', fontSize: '0.88rem', fontFamily: 'Rajdhani', fontWeight: 700 }}>
+                Go to Support Page →
+              </Link>
             </div>
           </div>
 

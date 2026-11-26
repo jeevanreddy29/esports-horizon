@@ -1,7 +1,7 @@
 import logoImg from '../assets/esports-horizon-logo.jpg';
 
 export default function BrandLogo({ size = 38 }) {
-  const height = size >= 44 ? 76 : size >= 40 ? 54 : 44;
+  const height = size >= 44 ? 82 : size >= 40 ? 60 : 52;
 
   return (
     <div style={{ display: 'inline-flex', alignItems: 'center', userSelect: 'none' }}>

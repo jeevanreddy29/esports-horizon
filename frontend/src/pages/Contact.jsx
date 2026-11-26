@@ -47,18 +47,18 @@ export default function Contact() {
             <div className="card" style={{ padding: '30px', display: 'flex', alignItems: 'center', gap: 20 }}>
               <div className="shape-circle" style={{ width: 50, height: 50, background: 'rgba(234,67,53,0.1)', color: '#ea4335', fontSize: '1.2rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><FaEnvelope /></div>
               <div>
-                <div style={{ fontFamily: 'Rajdhani', fontWeight: 800, color: 'var(--text-muted)' }}>EMAIL US</div>
-                <div style={{ fontFamily: 'Inter', fontWeight: 600 }}>
-                  <a href="mailto:esportshubindia@gmail.com" style={{ color: '#fff', textDecoration: 'none', transition: 'color 0.3s' }} onMouseEnter={e => e.currentTarget.style.color = '#ea4335'} onMouseLeave={e => e.currentTarget.style.color = '#fff'}>esportshubindia@gmail.com</a>
+                <div style={{ fontFamily: 'Rajdhani', fontWeight: 800, color: 'var(--text-muted)' }}>OFFICIAL EMAIL</div>
+                <div style={{ fontFamily: 'Inter', fontWeight: 600, color: 'var(--cyan)' }}>
+                  Coming Soon — We&apos;ll let you know soon!
                 </div>
               </div>
             </div>
             <div className="card" style={{ padding: '30px', display: 'flex', alignItems: 'center', gap: 20 }}>
               <div className="shape-circle" style={{ width: 50, height: 50, background: 'rgba(245,166,35,0.1)', color: 'var(--gold)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><FaPhone /></div>
               <div>
-                <div style={{ fontFamily: 'Rajdhani', fontWeight: 800, color: 'var(--text-muted)' }}>CALL US</div>
-                <div style={{ fontFamily: 'Inter', fontWeight: 600 }}>
-                  <a href="tel:+919876543210" style={{ color: '#fff', textDecoration: 'none', transition: 'color 0.3s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--gold)'} onMouseLeave={e => e.currentTarget.style.color = '#fff'}>+91 98765 43210</a>
+                <div style={{ fontFamily: 'Rajdhani', fontWeight: 800, color: 'var(--text-muted)' }}>SUPPORT HELPLINE</div>
+                <div style={{ fontFamily: 'Inter', fontWeight: 600, color: 'var(--gold)' }}>
+                  Launching Soon — Stay Tuned!
                 </div>
               </div>
             </div>
