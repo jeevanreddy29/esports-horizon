@@ -6,7 +6,7 @@ import { leaderboardAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
 import { GameIcon } from '../utils/gameLogos';
 
-const GAMES = ['all', 'Valorant', 'BGMI', 'MLBB', 'Free Fire Max', 'Pokemon Unite', 'Minecraft', 'CS2', 'Call of Duty Mobile', 'Tekken 8', 'Clash Royale', 'FC Mobile'];
+const GAMES = ['all', 'Valorant', 'BGMI', 'MLBB', 'Free Fire India', 'Pokemon Unite', 'Minecraft', 'CS2', 'Call of Duty Mobile', 'Tekken 8', 'Clash Royale', 'FC Mobile'];
 
 const RankBadge = ({ rank }) => {
   const colors = {

@@ -8,12 +8,12 @@ import BrandLogo from '../components/BrandLogo';
 import { GameIcon } from '../utils/gameLogos';
 import { FaEnvelope, FaPhone, FaTrophy, FaUsers, FaGamepad, FaMapMarkedAlt, FaUserCircle, FaSearch, FaCrosshairs, FaMedal, FaArrowRight } from 'react-icons/fa';
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ DATA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─────────────── DATA ─────────────── */
 const GAMES = [
   { name: 'Valorant', color: '#FF4655', players: '8K+', tournaments: 24 },
   { name: 'BGMI', color: '#FF6B35', players: '12K+', tournaments: 38 },
   { name: 'MLBB', color: '#06B6D4', players: '6K+', tournaments: 20 },
-  { name: 'Free Fire Max', color: '#FF9500', players: '15K+', tournaments: 42 },
+  { name: 'Free Fire India', color: '#FF9500', players: '15K+', tournaments: 42 },
   { name: 'Pokemon Unite', color: '#8B5CF6', players: '2K+', tournaments: 9 },
   { name: 'Minecraft', color: '#10B981', players: '18K+', tournaments: 10 },
   { name: 'CS2', color: '#F59E0B', players: '5K+', tournaments: 16 },
@@ -25,20 +25,20 @@ const GAMES = [
 
 const STATS = [
   { value: '50K+', label: 'Players', color: '#00f3ff', icon: <FaUsers /> },
-  { value: 'â‚¹5Cr+', label: 'Total Prizes', color: '#ffd60a', icon: <FaTrophy /> },
+  { value: '₹5Cr+', label: 'Total Prizes', color: '#ffd60a', icon: <FaTrophy /> },
   { value: '200+', label: 'Tournaments', color: '#7b2fff', icon: <FaGamepad /> },
   { value: '28', label: 'States', color: '#00ff88', icon: <FaMapMarkedAlt /> },
 ];
 
 const TICKER_ITEMS = [
-  'LIVE â€” Battlegrounds Mobile India Pro Series (BMPS) 2026 â€” â‚¹2 Cr Prize Pool',
-  'COMPLETED â€” FFMIC 2026 Spring â€” Congratulations to Team Hind!',
-  'UPCOMING â€” Free Fire MAX India Cup (FFMIC) Fall â€” Starting August 15',
-  'UPCOMING â€” VALORANT Challengers South Asia Split 2 â€” Qualifiers in June',
-  'LIVE â€” Skyesports Free Fire Max Grand Prix â€” Intense competition in Group Stages',
-  'UPCOMING â€” ESL India CS2 Pro League S1 â€” Register now on official portal',
-  'LEADERBOARD â€” GodL_Jonathan leads BGMI rankings with 15k+ points',
-  'NEWS â€” Team Hind dominates FFMIC Spring Grand Finals in Ahmedabad',
+  'LIVE — Battlegrounds Mobile India Pro Series (BMPS) 2026 — ₹2 Cr Prize Pool',
+  'COMPLETED — FFMIC 2026 Spring — Congratulations to Team Hind!',
+  'UPCOMING — Free Fire India Cup (FFIC) Fall — Starting August 15',
+  'UPCOMING — VALORANT Challengers South Asia Split 2 — Qualifiers in June',
+  'LIVE — Skyesports Free Fire India Grand Prix — Intense competition in Group Stages',
+  'UPCOMING — ESL India CS2 Pro League S1 — Register now on official portal',
+  'LEADERBOARD — GodL_Jonathan leads BGMI rankings with 15k+ points',
+  'NEWS — Team Hind dominates FFMIC Spring Grand Finals in Ahmedabad',
 ];
 
 const NEWS = [
@@ -85,7 +85,7 @@ const HOW_IT_WORKS = [
     step: '02',
     icon: <FaSearch size={28} />,
     title: 'Discover Tournaments',
-    desc: 'Browse 200+ live and upcoming tournaments filtered by game, prize pool, format, and region â€” all in one place.',
+    desc: 'Browse 200+ live and upcoming tournaments filtered by game, prize pool, format, and region — all in one place.',
     color: 'var(--purple)',
   },
   {
@@ -141,7 +141,7 @@ const STREAMERS = [
   { name: 'Mortal', game: 'BGMI', followers: '7.2M', platform: 'YouTube', color: '#FF6B35', handle: '@mortal' },
   { name: 'Jonathan Gaming', game: 'BGMI', followers: '10.5M', platform: 'YouTube', color: '#FF9500', handle: '@jonathan' },
   { name: 'GodLike Sc0utOP', game: 'BGMI/IND Team', followers: '5.1M', platform: 'YouTube', color: '#ffd60a', handle: '@sc0utop' },
-  { name: 'Alpha Clasher', game: 'Free Fire Max', followers: '9.3M', platform: 'YouTube', color: '#10B981', handle: '@alphaclasher' },
+  { name: 'Alpha Clasher', game: 'Free Fire India', followers: '9.3M', platform: 'YouTube', color: '#10B981', handle: '@alphaclasher' },
   { name: 'Snax', game: 'Valorant India', followers: '1.8M', platform: 'Twitch', color: '#FF4655', handle: '@snaxval' },
   { name: 'Regaltos', game: 'BGMI', followers: '3.4M', platform: 'YouTube', color: '#8B5CF6', handle: '@regaltos' },
 ];
@@ -156,7 +156,7 @@ const TOP_CLANS = [
   { name: 'Team Mayavi', tag: 'MYVI', game: 'Free Fire', wins: 33, color: '#10B981' },
 ];
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ TOURNAMENT CARD (OPTION A: FACEIT STYLE) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─────────────── TOURNAMENT CARD (OPTION A: FACEIT STYLE) ─────────────── */
 function TournamentCard({ t, isSkeleton }) {
   if (isSkeleton) {
     return (
@@ -239,7 +239,7 @@ function TournamentCard({ t, isSkeleton }) {
             letterSpacing: '0.08em',
             marginBottom: 18
           }}>
-            {t.game} â€¢ {t.organizer || 'Official Circuit'}
+            {t.game} • {t.organizer || 'Official Circuit'}
           </div>
 
           {/* Stats Box */}
@@ -283,7 +283,7 @@ function TournamentCard({ t, isSkeleton }) {
             marginTop: 'auto',
             textAlign: 'center'
           }}>
-            {t.status === 'live' ? 'Enter Match Arena' : 'View Tournament Details â†’'}
+            {t.status === 'live' ? 'Enter Match Arena' : 'View Tournament Details →'}
           </div>
         </div>
       </Link>
@@ -291,7 +291,7 @@ function TournamentCard({ t, isSkeleton }) {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ MAIN PAGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─────────────── MAIN PAGE ─────────────── */
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [liveT, setLiveT] = useState([]);
@@ -355,7 +355,7 @@ export default function Home() {
 
   return (
     <div>
-      {/* â”€â”€ TICKER â”€â”€ */}
+      {/* ── TICKER ── */}
       <div style={{ paddingTop: 72 }}>
         <div className="ticker-wrap">
           <div className="ticker-content">
@@ -369,7 +369,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* â”€â”€ HERO â”€â”€ */}
+      {/* ── HERO ── */}
       <section className="hero">
         <div className="hero-bg" />
         <div className="hero-grid" />
@@ -385,11 +385,11 @@ export default function Home() {
                 <span className="gradient-text" style={{ background: 'linear-gradient(135deg, var(--cyan), var(--purple), var(--pink))', WebkitBackgroundClip: 'text' }}>Follow Every Tournament.</span>
               </h1>
               <p className="hero-description anim-fade-up delay-300">
-                Discover <strong>200+</strong> live tournaments across <strong>9 titles</strong>. Compete for <strong>â‚¹2 Crore+</strong> prize pools. Powered by AI match prep from <strong>NeuroGamer</strong>.
+                Discover <strong>200+</strong> live tournaments across <strong>9 titles</strong>. Compete for <strong>₹2 Crore+</strong> prize pools. Powered by AI match prep from <strong>NeuroGamer</strong>.
               </p>
               <div style={{ display: 'flex', gap: 16, marginBottom: 48, flexWrap: 'wrap' }} className="anim-fade-up delay-400 hero-btns">
                 <Link to="/tournaments" className="btn btn-primary btn-lg" style={{ background: 'linear-gradient(135deg, var(--cyan), var(--purple))' }}>
-                  Explore Tournaments â†’
+                  Explore Tournaments →
                 </Link>
                 <Link to="/leaderboard" className="btn btn-secondary btn-lg" style={{ borderColor: 'rgba(0,243,255,0.3)', color: 'var(--cyan)' }}>
                   View Leaderboard
@@ -410,7 +410,7 @@ export default function Home() {
                     <div style={{ textAlign: 'left' }}>
                       <div className="hero-stat-value" style={{ color: s.color, fontSize: '1.1rem', fontWeight: 800, fontFamily: 'Rajdhani', marginBottom: 0 }}>
                         {s.label === 'Players' ? `${(counter.players / 1000).toFixed(0)}K+`
-                          : s.label === 'Total Prizes' ? `â‚¹${counter.prize}L+`
+                          : s.label === 'Total Prizes' ? `₹${counter.prize}L+`
                             : s.label === 'Tournaments' ? `${counter.tournaments}+`
                               : s.value}
                       </div>
@@ -447,13 +447,13 @@ export default function Home() {
                   BMPS 2026 Pro Series
                 </h3>
                 <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: 20 }}>
-                  KRAFTON Official â€¢ 64 Elite Invited Squads
+                  KRAFTON Official • 64 Elite Invited Squads
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
                   <div style={{ background: 'var(--bg-tertiary)', padding: '12px 14px', borderRadius: 8, border: '1px solid var(--border-subtle)' }}>
                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase' }}>Prize Pool</div>
-                    <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.2rem', color: 'var(--gold)' }}>â‚¹2,00,00,000</div>
+                    <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.2rem', color: 'var(--gold)' }}>₹2,00,00,000</div>
                   </div>
                   <div style={{ background: 'var(--bg-tertiary)', padding: '12px 14px', borderRadius: 8, border: '1px solid var(--border-subtle)' }}>
                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase' }}>Region</div>
@@ -467,7 +467,7 @@ export default function Home() {
                 </div>
 
                 <Link to="/tournaments" className="btn btn-primary" style={{ width: '100%', textAlign: 'center' }}>
-                  Explore All Competitions â†’
+                  Explore All Competitions →
                 </Link>
               </div>
             </div>
@@ -475,12 +475,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* â”€â”€ GAMES SECTION â”€â”€ */}
+      {/* ── GAMES SECTION ── */}
       <section className="section" style={{ background: 'rgba(255,255,255,0.01)' }}>
         <div className="container">
           <h2 className="section-title anim-fade-up"><span className="gradient-text">Featured Games</span></h2>
           <p className="section-subtitle anim-fade-up delay-100">
-            More games available â€” from battle royale to fighting games
+            More games available — from battle royale to fighting games
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 24 }}>
             {GAMES.map((g, i) => (
@@ -546,7 +546,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* â”€â”€ LIVE TOURNAMENTS â”€â”€ */}
+      {/* ── LIVE TOURNAMENTS ── */}
       {liveT.length > 0 && (
         <section className="section">
           <div className="container">
@@ -554,7 +554,7 @@ export default function Home() {
               <h2 className="section-title"><span className="gradient-text">Live Tournaments</span></h2>
               <span className="badge badge-live">LIVE</span>
             </div>
-            <p className="section-subtitle">Happening right now â€” jump in before slots close!</p>
+            <p className="section-subtitle">Happening right now — jump in before slots close!</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
               {liveT.map(t => <TournamentCard key={t.id} t={t} />)}
             </div>
@@ -562,14 +562,14 @@ export default function Home() {
         </section>
       )}
 
-      {/* â”€â”€ UPCOMING TOURNAMENTS â”€â”€ */}
+      {/* ── UPCOMING TOURNAMENTS ── */}
       <section className="section" style={{ background: 'rgba(123,47,255,0.03)' }}>
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
             <h2 className="section-title"><span className="gradient-text">Upcoming Tournaments</span></h2>
-            <Link to="/tournaments" className="btn btn-secondary btn-sm">View All â†’</Link>
+            <Link to="/tournaments" className="btn btn-secondary btn-sm">View All →</Link>
           </div>
-          <p className="section-subtitle">Register now before slots fill up â€” countdowns are ticking.</p>
+          <p className="section-subtitle">Register now before slots fill up — countdowns are ticking.</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
             {isLoading
               ? [1, 2, 3].map(i => <TournamentCard key={i} isSkeleton />)
@@ -579,14 +579,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* â”€â”€ HOW IT WORKS â”€â”€ */}
+      {/* ── HOW IT WORKS ── */}
       <section className="section" style={{ background: 'rgba(0,243,255,0.02)' }}>
         <div className="container">
           <h2 className="section-title anim-fade-up" style={{ textAlign: 'center' }}>
             <span className="gradient-text">How It Works</span>
           </h2>
           <p className="section-subtitle anim-fade-up delay-100" style={{ textAlign: 'center' }}>
-            From signup to champion â€” your esports journey in 4 steps
+            From signup to champion — your esports journey in 4 steps
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 24, position: 'relative' }}>
             {/* connector line */}
@@ -629,12 +629,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* â”€â”€ FEATURED STREAMERS / PROS â”€â”€ */}
+      {/* ── FEATURED STREAMERS / PROS ── */}
       <section className="section">
         <div className="container">
           <h2 className="section-title anim-fade-up"><span className="gradient-text">Indian Esports Icons</span></h2>
           <p className="section-subtitle anim-fade-up delay-100">
-            The pros who made Indian gaming go global â€” follow their journey and compete in their leagues
+            The pros who made Indian gaming go global — follow their journey and compete in their leagues
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
             {STREAMERS.map((s, i) => (
@@ -678,13 +678,13 @@ export default function Home() {
           </div>
           <div style={{ textAlign: 'center', marginTop: 32 }}>
             <Link to="/leaderboard" className="btn btn-secondary">
-              See Full Leaderboard â†’
+              See Full Leaderboard →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* â”€â”€ PLAYER TESTIMONIALS â”€â”€ */}
+      {/* ── PLAYER TESTIMONIALS ── */}
       <section className="section" style={{ background: 'rgba(123,47,255,0.04)' }}>
         <div className="container">
           <h2 className="section-title anim-fade-up" style={{ textAlign: 'center' }}>
@@ -724,7 +724,7 @@ export default function Home() {
                         }}>{t.initial}</div>
                         <div>
                           <div style={{ fontFamily: 'Orbitron', fontWeight: 800, fontSize: '0.95rem', color: t.color }}>{t.name}</div>
-                          <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t.state} Â· {t.rank}</div>
+                          <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t.state} · {t.rank}</div>
                         </div>
                         <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
                           <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.2rem', color: '#ffd60a' }}>{t.wins}</div>
@@ -755,7 +755,7 @@ export default function Home() {
       </section>
 
 
-      {/* â”€â”€ NEWS SECTION â”€â”€ */}
+      {/* ── NEWS SECTION ── */}
       <section className="section" style={{ background: 'rgba(5,5,16,0.6)' }}>
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
@@ -786,7 +786,7 @@ export default function Home() {
                   <div style={{ padding: 24 }}>
                     <div style={{ display: 'flex', gap: 12, marginBottom: 12, fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700 }}>
                       <span>{item.date}</span>
-                      <span>â€¢</span>
+                      <span>•</span>
                       <span>{item.source}</span>
                     </div>
                     <h3 style={{ fontFamily: 'Orbitron', fontWeight: 800, fontSize: '1.1rem', color: '#fff', lineHeight: 1.5, marginBottom: 20 }}>{item.title}</h3>
@@ -801,7 +801,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* â”€â”€ CTA BANNER â”€â”€ */}
+      {/* ── CTA BANNER ── */}
       <section className="section" style={{ background: 'rgba(123,47,255,0.03)' }}>
         <div className="container">
           <div className="glass-card" style={{
@@ -817,7 +817,7 @@ export default function Home() {
               Ready to <span className="gradient-text">Compete?</span>
             </h2>
             <p style={{ color: 'var(--text-secondary)', maxWidth: 560, margin: '0 auto 32px', lineHeight: 1.85, fontSize: '1.05rem' }}>
-              Join <strong>50,000+ gamers</strong> already competing. Register for tournaments, win prizes up to <strong>â‚¹5 Lakhs</strong>, climb the leaderboard, and make your mark in esports history!
+              Join <strong>50,000+ gamers</strong> already competing. Register for tournaments, win prizes up to <strong>₹5 Lakhs</strong>, climb the leaderboard, and make your mark in esports history!
             </p>
             <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
               <Link to="/signup" className="btn btn-primary btn-lg">Create Account</Link>
@@ -827,7 +827,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* â”€â”€ FOOTER â”€â”€ */}
+      {/* ── FOOTER ── */}
       <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(5,5,16,0.9)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '60px 24px 32px' }}>
           {/* Top grid */}

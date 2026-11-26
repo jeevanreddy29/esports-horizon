@@ -39,8 +39,8 @@ const DEFAULT_TOURNAMENTS = [
   },
   {
     id: 2,
-    title: 'Skyesports Free Fire Max Grand Prix',
-    game: 'Free Fire Max', status: 'live',
+    title: 'Skyesports Free Fire India Grand Prix',
+    game: 'Free Fire India', status: 'live',
     prize_pool: '₹12,00,000', slots: 128, slots_filled: 110,
     start_date: '2026-04-22', end_date: '2026-05-05',
     registration_deadline: '2026-04-20',
@@ -48,7 +48,7 @@ const DEFAULT_TOURNAMENTS = [
     organizer: 'Skyesports',
     banner_color: '#e5a93c',
     registration_link: 'https://skyesports.in/',
-    description: 'The Skyesports Grand Prix brings the best Free Fire MAX squads together. Open qualifiers concluded, currently in Group Stages.',
+    description: 'The Skyesports Grand Prix brings the best Free Fire India squads together. Open qualifiers concluded, currently in Group Stages.',
     rules: ['Squad Mode', 'Mobile Only', 'Fair Play Rules']
   },
 
@@ -69,8 +69,8 @@ const DEFAULT_TOURNAMENTS = [
   },
   {
     id: 4,
-    title: 'Free Fire MAX India Cup (FFMIC) 2026: Fall',
-    game: 'Free Fire Max', status: 'upcoming',
+    title: 'Free Fire India Cup (FFIC) 2026: Fall',
+    game: 'Free Fire India', status: 'upcoming',
     prize_pool: '₹1,00,00,000', slots: 512, slots_filled: 280,
     start_date: '2026-08-15', end_date: '2026-09-30',
     registration_deadline: '2026-08-10',
@@ -99,8 +99,8 @@ const DEFAULT_TOURNAMENTS = [
   // ===== PAST =====
   {
     id: 6,
-    title: 'Free Fire MAX India Cup (FFMIC) 2026: Spring',
-    game: 'Free Fire Max', status: 'past',
+    title: 'Free Fire India Cup (FFIC) 2026: Spring',
+    game: 'Free Fire India', status: 'past',
     prize_pool: '₹1,00,00,000', slots: 256, slots_filled: 256,
     start_date: '2026-03-20', end_date: '2026-04-26',
     registration_deadline: '2026-03-15',
@@ -108,7 +108,7 @@ const DEFAULT_TOURNAMENTS = [
     organizer: 'Garena India',
     banner_color: '#8b5cf6',
     registration_link: 'Completed',
-    description: 'Congratulations to Team Hind for winning the FFMIC 2026 Spring Cup! They dominated the Grand Finals at Mahatma Mandir.',
+    description: 'Congratulations to Team Hind for winning the FFIC 2026 Spring Cup! They dominated the Grand Finals at Mahatma Mandir.',
     rules: ['Completed Tournament']
   },
   {
@@ -133,8 +133,8 @@ const DEFAULT_LEADERBOARD = [
   { id: 3, player_name: 'ScoutOP', game: 'BGMI', state: 'Punjab', rank: 3, points: 14200, wins: 102, tournaments_played: 135, avatar_color: '#e5a93c' },
   { id: 4, player_name: 'GE_SkRossi', game: 'Valorant', state: 'Karnataka', rank: 1, points: 13900, wins: 95, tournaments_played: 112, avatar_color: '#ef4444' },
   { id: 5, player_name: 'VLT_Lightningfast', game: 'Valorant', state: 'Kerala', rank: 2, points: 13200, wins: 88, tournaments_played: 105, avatar_color: '#f59e0b' },
-  { id: 6, player_name: 'Total_Gaming', game: 'Free Fire Max', state: 'Gujarat', rank: 1, points: 16800, wins: 145, tournaments_played: 180, avatar_color: '#e5a93c' },
-  { id: 7, player_name: 'Badge99_FF', game: 'Free Fire Max', state: 'Uttarakhand', rank: 2, points: 15200, wins: 132, tournaments_played: 165, avatar_color: '#00d2ff' },
+  { id: 6, player_name: 'Total_Gaming', game: 'Free Fire India', state: 'Gujarat', rank: 1, points: 16800, wins: 145, tournaments_played: 180, avatar_color: '#e5a93c' },
+  { id: 7, player_name: 'Badge99_FF', game: 'Free Fire India', state: 'Uttarakhand', rank: 2, points: 15200, wins: 132, tournaments_played: 165, avatar_color: '#00d2ff' },
   { id: 8, player_name: 'Tekken_King_IN', game: 'Tekken 8', state: 'West Bengal', rank: 1, points: 12500, wins: 85, tournaments_played: 98, avatar_color: '#ef4444' },
   { id: 9, player_name: 'MLBB_Slayer', game: 'MLBB', state: 'Assam', rank: 1, points: 11800, wins: 76, tournaments_played: 88, avatar_color: '#00d2ff' }
 ];
